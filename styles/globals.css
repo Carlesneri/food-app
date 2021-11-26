@@ -2,26 +2,37 @@
   --regular-blue: #0433BF;
   --dark-blue: #022873;
   --light-blue: #0460D9;
-  --low-blue: #0433BF;
+  --low-blue: hsl(225, 75%, 25%);
   --regular-grey: #BEBF8F;
 }
 html,
 body {
   padding: 0;
   margin: 0;
-  /* background-color: var(--regular-grey); */
   font-family: 'Kufam', sans-serif;
 }
-
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex-grow: 1;
+  margin: 2rem;
+}
 a {
   color: inherit;
   text-decoration: none;
 }
-
 * {
   box-sizing: border-box;
 }
-
+ul {
+  padding-inline-start: 0;
+}
 li {
   list-style: none;
+}
+img {
+  border-radius: 4px;
 }

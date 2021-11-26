@@ -10,9 +10,9 @@ export default function Card({title, description, image}) {
       <header className={styles.header}>
         {title}
       </header>
-      <div className={styles.description}>
+      <h2 className={styles.description}>
         {description}
-      </div>      
+      </h2>      
     </div>
   )
 }

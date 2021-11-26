@@ -1,0 +1,14 @@
+.page h2 {
+  text-align: center;
+}
+.imageWrapper {
+  display: flex;
+  position: relative;
+  width: clamp(250px, 350px, 100vw);
+  height: clamp(250px, 350px, 100vh);
+  float: left;
+  margin: 0 2rem 2rem 0;
+}
+.image {
+  border-radius: 4px;
+}
