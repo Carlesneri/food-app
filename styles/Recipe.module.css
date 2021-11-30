@@ -1,0 +1,49 @@
+.recipe {
+  font-size: .9em;
+}
+.imageSumary {
+  display: flex;
+}
+.recipe h2 {
+  text-align: center;
+}
+.imageWrapper {
+  display: flex;
+  position: relative;
+  width: 556px;
+  height: 370px;
+  margin: 2rem auto;
+}
+.image {
+  border-radius: 4px;
+}
+.recipe ol {
+  padding: 0;
+}
+.recipe h4 span {
+  margin-right: 1rem;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tags span {
+  margin: .4rem;
+  font-size: .6rem;
+  font-weight: bold;
+  padding: .4rem;
+  border-radius: 4px;
+  background-color: var(--regular-grey);
+}
+@media(max-width: 750px) {
+  .imageWrapper {
+    width: 350px;
+    height: 233px;
+  }
+}
+@media(max-width: 400px) {
+  .imageWrapper {
+    width: 250px;
+    height: 167px;
+  }
+}
