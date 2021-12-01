@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Recipe from '../../components/Recipe'
-import parser from 'html-react-parser'
-import { useEffect, useState } from 'react'
 
 export default function Tags({ recipe = null }) {
 
@@ -13,31 +11,13 @@ export default function Tags({ recipe = null }) {
 
   recipe?.title && (content = `${content}: ${recipe.title}`)
 
-  const [parsedRecipe, setParsedRecipe] = useState(null)
-
-  useEffect(() => {
-
-    if(recipe) {
-      const parsedRecipe = {
-        ...recipe,
-        summary: parser(recipe.summary),
-      }
-
-      setParsedRecipe(parsedRecipe)
-    }
-
-  }, [recipe])
-  
   return (
     <>
       <Head>
         <title>{tags} | Mediterranean food</title>
         <meta name="description" content={content} />
       </Head>
-      {parsedRecipe ? (
-        <Recipe recipe={parsedRecipe} />
-      ) :
-      <h1>No recipe Found</h1>}
+      {recipe && <Recipe recipe={recipe} />}
     </>
   )
 }

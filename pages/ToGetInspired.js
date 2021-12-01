@@ -1,34 +1,16 @@
 import Head from 'next/head'
-import parser from 'html-react-parser'
-import { useEffect, useState } from 'react'
 import Recipe from '../components/Recipe'
 
 export default function ToGetInspired({ recipe = {} }) {
 
-  const [parsedRecipe, setParsedRecipe] = useState({})
-
-  useEffect(() => {
-
-    if(recipe !== {}) {
-      const parsedRecipe = {
-        ...recipe,
-        summary: parser(recipe.summary),
-        instructions: parser(recipe.instructions)
-      }
-
-      setParsedRecipe(parsedRecipe)
-    }
-
-  }, [recipe])
-  
   return (
     <>
       <Head>
         <title>To get inspired | Mediterranean food</title>
         <meta name="description" content="Get inspired with a suculent mediterranean recipe." />
       </Head>
-      {parsedRecipe !== {} && (
-        <Recipe recipe={parsedRecipe} />
+      {recipe !== {} && (
+        <Recipe recipe={recipe} />
       )}
     </>
   )
@@ -39,7 +21,7 @@ export const getServerSideProps = async function() {
 
   const res = await fetch(`${HOST}/api/randomRecipe?tags=mediterranean`)
   const { recipe } = await res.json()
-  // console.log(recipe)
+  console.log(recipe)
 
   return {
     props: {

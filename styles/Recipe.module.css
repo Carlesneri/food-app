@@ -17,8 +17,25 @@
 .image {
   border-radius: 4px;
 }
-.recipe ol {
+.instructions ol {
   padding: 0;
+}
+.instructions li::first-letter {
+  text-transform: capitalize;
+}
+.ingredients li {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+.ingredients li img {
+  max-height: 32px;
+  width: 100px;
+  object-fit: scale-down;
+  margin-right: 1rem;
+}
+.ingredients li span::first-letter {
+  text-transform: capitalize;
 }
 .recipe h4 span {
   margin-right: 1rem;
@@ -31,9 +48,13 @@
   margin: .4rem;
   font-size: .6rem;
   font-weight: bold;
-  padding: .4rem;
+  padding: 0 .4rem;
   border-radius: 4px;
   background-color: var(--regular-grey);
+}
+.credits {
+  color: var(--hard-grey);
+  font-size: .8rem;
 }
 @media(max-width: 750px) {
   .imageWrapper {

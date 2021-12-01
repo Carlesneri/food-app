@@ -3,6 +3,7 @@
   --dark-blue: #022873;
   --light-blue: #0460D9;
   --low-blue: hsl(225, 75%, 25%);
+  --hard-grey: hsl(61, 27%, 30%);
   --regular-grey: #BEBF8F;
 }
 html,
@@ -10,6 +11,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Kufam', sans-serif;
+  line-height: 1.8em;
 }
 .app {
   min-height: 100vh;
