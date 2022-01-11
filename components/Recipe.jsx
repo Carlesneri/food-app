@@ -2,20 +2,31 @@ import Image from 'next/image'
 import styles from '../styles/Recipe.module.css'
 import parser from 'html-react-parser'
 import { useEffect, useState } from 'react'
+import defaultIngredientImage from '../public/defaultIngredientImage.png'
+
+function transformHrefs(text) {
+  return text.replaceAll('https://spoonacular.com', '')
+}
+
 
 export default function Recipe({ recipe }) {
 
-  console.log(recipe)
-
   const [parsedRecipe, setParsedRecipe] = useState(null)
+
+  const [onError, setOnError] = useState([])
 
   useEffect(() => {
 
     if(recipe) {
+      const hrefTransformedSummary = transformHrefs(recipe?.summary)
+      const parsedSummary = parser(hrefTransformedSummary)
+
+      const parsedInstructions = recipe.instructions ? parser(recipe.instructions) : ''
+
       const parsedRecipe = {
         ...recipe,
-        summary: parser(recipe.summary),
-        instructions: parser(recipe.instructions)
+        summary: parsedSummary,
+        instructions: parsedInstructions
       }
 
       setParsedRecipe(parsedRecipe)
@@ -45,17 +56,23 @@ export default function Recipe({ recipe }) {
               <span>Servings: {parsedRecipe.servings}</span>
               <span>Preparation time: {parsedRecipe.readyInMinutes} minutes</span>
             </h4>
-            <div>{parsedRecipe.summary}</div>
+            <div className={styles.summary}>{parsedRecipe.summary}</div>
           </div>
           <h3>
             Ingredients
           </h3>
           <ol className={styles.ingredients}>
-            {parsedRecipe.extendedIngredients.map(ingredient => {
+            {parsedRecipe.extendedIngredients.map((ingredient, i) => {
               ingredient.source = `https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`
             return (
-              <li key={ingredient.id}>
-                <img src={ingredient.source} alt={ingredient.name} />
+              <li key={i + '-' + ingredient.id} title={ingredient.name}>
+                <Image 
+                onError={() => setOnError(ids => [...ids, ingredient.id])}
+                src={onError.some(el => el === ingredient.id) ? defaultIngredientImage : ingredient.source}
+                width='100'
+                height='64'
+                objectFit='scale-down'
+                alt={ingredient.name}/>
                 <span>
                   {ingredient.name}
                 </span>
@@ -97,8 +114,7 @@ export default function Recipe({ recipe }) {
         <>
         </>
       }
-    </>
-    
+    </>    
   )
 }
 

@@ -4,6 +4,13 @@
 .imageSumary {
   display: flex;
 }
+.summary {
+  font-size: 1rem;
+}
+.summary a {
+  color: var(--dark-blue);
+  font-weight: bold;
+}
 .recipe h2 {
   text-align: center;
 }
@@ -17,22 +24,48 @@
 .image {
   border-radius: 4px;
 }
+.recipe ol {
+  padding: 0;
+}
 .instructions ol {
   padding: 0;
 }
 .instructions li::first-letter {
   text-transform: capitalize;
 }
-.ingredients li {
-  height: 50px;
+.ingredients {
   display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
   align-items: center;
 }
-.ingredients li img {
-  max-height: 32px;
+.ingredients li {
+  padding: .4rem;
   width: 100px;
-  object-fit: scale-down;
-  margin-right: 1rem;
+  height: 80px;
+  line-height: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 8px;
+  align-items: center;
+  box-shadow: 1px 1px 5px 0px var(--regular-grey);
+  overflow: hidden;
+}
+.ingredients li span {
+  text-align: center;
+  color: var(--hard-grey);
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 12px;
+  transition: all .1s ease;
+  height: fit-content;
+  height: 50%;
+}
+.ingredients li:hover span {
+  color: transparent;
+  font-size: 0;
+  height: 0;
 }
 .ingredients li span::first-letter {
   text-transform: capitalize;
@@ -43,16 +76,22 @@
 .tags {
   display: flex;
   flex-wrap: wrap;
+  gap: .4rem;
 }
 .tags span {
-  margin: .4rem;
+  display: flex;
+  align-items: center;
+  color: white;
+  line-height: normal;
   font-size: .6rem;
   font-weight: bold;
-  padding: 0 .4rem;
-  border-radius: 4px;
+  padding: .8rem .6rem .6rem;
+  border-radius: 8px;
   background-color: var(--regular-grey);
 }
 .credits {
+  margin: 1rem;
+  text-align: center;
   color: var(--hard-grey);
   font-size: .8rem;
 }

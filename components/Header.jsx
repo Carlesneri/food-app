@@ -10,9 +10,11 @@ export default function Header() {
           </svg>
         </Link>
       <ul>
-        <li>
-          Diet meals
-        </li>
+        <Link href="/dietMenus" passHref>
+          <li>
+            Diet menus
+          </li>
+        </Link>
         <li>
           Countries
         </li>

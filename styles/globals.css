@@ -11,7 +11,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Kufam', sans-serif;
-  line-height: 1.8em;
+  /* line-height: 1.8em; */
 }
 .app {
   min-height: 100vh;

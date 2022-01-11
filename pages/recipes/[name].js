@@ -1,16 +1,12 @@
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Recipe from '../../components/Recipe'
 
-export default function Tags({ recipe = null }) {
+export default function RecipePage({ recipe = null }) {
 
-  const router = useRouter()
-  const { tags } = router.query
-  const titleTag = tags?.toUpperCase() || ''
+  const titleTag = recipe?.title || ''
 
-  let content = `${tags[0].toUpperCase()}${tags.substr(1)} mediterranean recipe`
-
-  recipe?.title && (content = `${content}: ${recipe.title}`)
+  let content = recipe?.summary?.split('. ')[0] || ''
 
   return (
     <>
@@ -24,14 +20,19 @@ export default function Tags({ recipe = null }) {
 }
 
 export const getServerSideProps = async function(context) {
-  const { tags } = context.query 
+  const { name } = context.query 
+  const splittedName = name.split('-')
+  const ID = splittedName[splittedName.length - 1]
+  console.log({ ID })
+  
 
   const HOST = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : process.env.PRODUCTION_HOST
 
 
   try {
-    const URL = `${HOST}/api/randomRecipe?tags=mediterranean,${tags}`
+    const URL = `${HOST}/api/recipesByID?ID=${ID}`
 
+    console.log({ URL })
     
     const res = await fetch(URL)
     const { recipe } = await res.json()

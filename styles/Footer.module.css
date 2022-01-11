@@ -6,6 +6,8 @@
   font-weight: bold;
   padding: 2rem 2rem 1.2rem;
   color: var(--regular-blue);
+  box-shadow: -1px 0 1px var(--regular-blue);
+  /* border-top: 1px solid var(--light-blue) */
 }
 .footer span {
   margin: 1rem;
