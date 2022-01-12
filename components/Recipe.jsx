@@ -2,103 +2,141 @@ import Image from 'next/image'
 import styles from '../styles/Recipe.module.css'
 import parser from 'html-react-parser'
 import { useEffect, useState } from 'react'
-import defaultIngredientImage from '../public/defaultIngredientImage.png'
+// import defaultIngredientImage from '../public/defaultIngredientImage.png'
 
 function transformHrefs(text) {
   return text.replaceAll('https://spoonacular.com', '')
 }
 
-
 export default function Recipe({ recipe }) {
-
   const [parsedRecipe, setParsedRecipe] = useState(null)
 
-  const [onError, setOnError] = useState([])
+  const [onErrorIds, setOnErrorIds] = useState([])
 
   useEffect(() => {
-
-    if(recipe) {
+    if (recipe) {
       const hrefTransformedSummary = transformHrefs(recipe?.summary)
       const parsedSummary = parser(hrefTransformedSummary)
 
-      const parsedInstructions = recipe.instructions ? parser(recipe.instructions) : ''
+      const parsedInstructions = recipe.instructions
+        ? parser(recipe.instructions)
+        : ''
 
       const parsedRecipe = {
         ...recipe,
         summary: parsedSummary,
-        instructions: parsedInstructions
+        instructions: parsedInstructions,
       }
+
+      // console.log({ parsedRecipe })
 
       setParsedRecipe(parsedRecipe)
     }
-
   }, [recipe])
-  
+
   return (
     <>
-      {
-        parsedRecipe ? 
+      {parsedRecipe ? (
         <article className={styles.recipe}>
           <h2>{parsedRecipe.title}</h2>
-          <div className={styles.imageSummary}>
-            {parsedRecipe.image && (
-              <div className={styles.imageWrapper}>
-                <Image
-                  src={parsedRecipe.image}
-                  layout='fill'
-                  objectFit='contain'
-                  alt={parsedRecipe.title}
-                  className={styles.image}
-                />
-              </div>
-            )}
-            <h4>
-              <span>Servings: {parsedRecipe.servings}</span>
-              <span>Preparation time: {parsedRecipe.readyInMinutes} minutes</span>
-            </h4>
-            <div className={styles.summary}>{parsedRecipe.summary}</div>
-          </div>
-          <h3>
-            Ingredients
-          </h3>
-          <ol className={styles.ingredients}>
-            {parsedRecipe.extendedIngredients.map((ingredient, i) => {
-              ingredient.source = `https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`
-            return (
-              <li key={i + '-' + ingredient.id} title={ingredient.name}>
-                <Image 
-                onError={() => setOnError(ids => [...ids, ingredient.id])}
-                src={onError.some(el => el === ingredient.id) ? defaultIngredientImage : ingredient.source}
-                width='100'
-                height='64'
-                objectFit='scale-down'
-                alt={ingredient.name}/>
-                <span>
-                  {ingredient.name}
-                </span>
-              </li>
-            )
-          })}
-          </ol>
-          {parsedRecipe?.instructions &&
-            <>
-              <h3>Instructions</h3>   
-              {(typeof parsedRecipe.instructions === 'object') ? 
-                <div className={styles.instructions}>
-                  {parsedRecipe.instructions}
-                </div> :
-                <div className={styles.instructions}>
-                  <ol>
-                    {parsedRecipe.instructions.split('\n').map((p, i) => 
-                      <li key={i}>
-                        {p}
-                      </li>
-                    )}
-                  </ol>
+
+          <div className={styles.section}>
+            <div className={styles.imageSummary}>
+              {parsedRecipe.image && (
+                <div className={styles.imageWrapper}>
+                  <Image
+                    src={parsedRecipe.image}
+                    layout='fill'
+                    objectFit='contain'
+                    alt={parsedRecipe.title}
+                    className={styles.image}
+                  />
                 </div>
-              }
-            </>
-          }
+              )}
+              <h4>
+                <span>Servings: {parsedRecipe.servings}</span>
+                <span>
+                  Preparation time: {parsedRecipe.readyInMinutes} minutes
+                </span>
+              </h4>
+
+              <div className={styles.summary}>{parsedRecipe.summary}</div>
+            </div>
+          </div>
+
+          <div className={styles.section}>
+            {parsedRecipe.extendedIngredients.length !== onErrorIds.length &&
+            <>
+              <h3>Ingredients</h3>
+              <ol className={styles.ingredients}>
+                {parsedRecipe.extendedIngredients.map((ingredient, i) => {
+                  const isErrorIdImage = onErrorIds.some((el) => el === ingredient.id)
+                  
+                  if(!isErrorIdImage) {
+                    ingredient.source = `https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`
+                    return (
+                      <li
+                      key={i + '-' + ingredient.id}
+                      title={ingredient.name}
+                      >
+                        <Image
+                          priority
+                          onError={() =>
+                            setOnErrorIds((ids) => [...ids, ingredient.id])
+                          }
+                          src={ingredient.source}
+                          width='100'
+                          height='64'
+                          objectFit='scale-down'
+                          alt={ingredient.name}
+                        />
+                        <span>{ingredient.name}</span>
+                      </li>
+                    )
+                  }
+                })}
+              </ol>
+            </>}
+          </div>
+
+          <div className={styles.section}>
+            {parsedRecipe.analyzedInstructions[0].steps.length > 0 ? (
+              <>
+                <h3>Instructions</h3>
+                <ol>
+                  <div className={styles.instructions}>
+                    {parsedRecipe.analyzedInstructions[0].steps.map((p) => (
+                      <li key={p.number}>
+                        {p.number}. {p.step}
+                      </li>
+                    ))}
+                  </div>
+                </ol>
+              </>
+            ) : (
+              <>
+                {parsedRecipe?.instructions && (
+                  <>
+                    <h3>Instructions</h3>
+                    {typeof parsedRecipe.instructions === 'object' ? (
+                      <div className={styles.instructions}>
+                        {parsedRecipe.instructions}
+                      </div>
+                    ) : (
+                      <div className={styles.instructions}>
+                        <ol>
+                          {parsedRecipe.instructions.split('\n').map((p, i) => (
+                            <li key={i}>{p}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </div>
+
           <div className={styles.tags}>
             {parsedRecipe.vegetarian && <span>Vegetarian</span>}
             {parsedRecipe.vegan && <span>Vegan</span>}
@@ -106,15 +144,14 @@ export default function Recipe({ recipe }) {
             {parsedRecipe.veryHealthy && <span>Healthy</span>}
           </div>
           <div className={styles.credits}>
-            <a href={parsedRecipe.sourceUrl} target="_blank" rel="noreferrer">{parsedRecipe.creditsText}</a>
+            <a href={parsedRecipe.sourceUrl} target='_blank' rel='noreferrer'>
+              {parsedRecipe.creditsText}
+            </a>
           </div>
-
         </article>
-        :
-        <>
-        </>
-      }
-    </>    
+      ) : (
+        <></>
+      )}
+    </>
   )
 }
-

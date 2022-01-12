@@ -5,13 +5,15 @@
   --low-blue: hsl(225, 75%, 25%);
   --hard-grey: hsl(61, 27%, 30%);
   --regular-grey: #BEBF8F;
+  --max-width: 1000px;
+  --header-max-width: 1000px;
 }
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Kufam', sans-serif;
-  /* line-height: 1.8em; */
+  line-height: 1.8rem;
 }
 .app {
   min-height: 100vh;
@@ -20,7 +22,9 @@ body {
 }
 .main {
   flex-grow: 1;
-  margin: 2rem;
+  margin: 2rem auto;
+  width: var(--max-width);
+  max-width: calc(100vw - 2rem);
 }
 a {
   color: inherit;

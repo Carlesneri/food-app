@@ -15,7 +15,7 @@
   z-index: 1;
 }
 .card:hover {
-  filter: brightness(120%);
+  filter: brightness(125%);
 }
 .header {
   position: absolute;

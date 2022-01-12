@@ -1,5 +1,9 @@
 .recipe {
-  font-size: .9em;
+  max-width: 750px;
+  margin: 0 auto;
+}
+.section {
+  margin: 2rem auto;
 }
 .imageSumary {
   display: flex;
@@ -41,8 +45,8 @@
 }
 .ingredients li {
   padding: .4rem;
-  width: 100px;
-  height: 80px;
+  width: 120px;
+  height: 100px;
   line-height: normal;
   display: flex;
   flex-direction: column;

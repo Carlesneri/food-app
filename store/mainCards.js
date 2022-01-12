@@ -1,11 +1,5 @@
 const cards = [
   {
-    href: "/toGetInspired",
-    title: "To get inspired",
-    description: "The most succulent mediterranean dishes",
-    image: "/recipes.jpg",
-  },
-  {
     href: "/tags/soup",
     title: "To get warm",
     description: "Creams and soups",
@@ -34,6 +28,12 @@ const cards = [
     title: "To get sweety",
     description: "Tradicional mediterranean desserts",
     image: "/sweet.jpg",
+  },
+  {
+    href: "/toGetInspired",
+    title: "To get inspired",
+    description: "The most succulent mediterranean dishes",
+    image: "/recipes.jpg",
   },
 ]
 
