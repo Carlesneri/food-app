@@ -16,13 +16,10 @@ export default function ToGetInspired({ recipe }) {
 	)
 }
 
-export const getServerSideProps = async function () {
-	const HOST =
-		process.env.NODE_ENV === "development"
-			? "http://localhost:3000"
-			: process.env.PRODUCTION_HOST
+export const getServerSideProps = async function ({ req }) {
+	const { host } = req.headers
 
-	const res = await fetch(`${HOST}/api/randomRecipe?tags=mediterranean`)
+	const res = await fetch(`${host}/api/randomRecipe?tags=mediterranean`)
 	const { recipe } = await res.json()
 
 	return {
