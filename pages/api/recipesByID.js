@@ -8,6 +8,11 @@ export default async function handler(req, res) {
 export async function getRecipesByID(id) {
 	const URL = `https://api.spoonacular.com/recipes/${id}/information?includeInstructions=true&apiKey=${process.env.SPOONACULAR_API_KEY}`
 	const response = await fetch(URL)
+
+	if (!response.ok) {
+		return null
+	}
+
 	const recipe = await response.json()
 
 	return recipe || null
