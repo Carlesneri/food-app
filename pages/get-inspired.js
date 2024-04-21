@@ -1,5 +1,6 @@
 import Head from "next/head"
 import Recipe from "../components/Recipe"
+import { getRandomRecipe } from "./api/randomRecipe"
 
 export default function ToGetInspired({ recipe }) {
 	return (
@@ -16,11 +17,8 @@ export default function ToGetInspired({ recipe }) {
 	)
 }
 
-export const getServerSideProps = async function ({ req }) {
-	const { host } = req.headers
-
-	const res = await fetch(`${host}/api/randomRecipe?tags=mediterranean`)
-	const { recipe } = await res.json()
+export const getServerSideProps = async function () {
+	const recipe = await getRandomRecipe({ tags: "mediterranean" })
 
 	return {
 		props: {

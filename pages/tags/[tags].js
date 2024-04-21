@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import Head from "next/head"
 import Recipe from "../../components/Recipe"
+import { getRandomRecipe } from "../api/randomRecipe"
 
 export default function Tags({ recipe = null }) {
 	const router = useRouter()
@@ -17,20 +18,18 @@ export default function Tags({ recipe = null }) {
 				<title>{titleTag} | Mediterranean food</title>
 				<meta name="description" content={content} />
 			</Head>
-			{recipe && <Recipe recipe={recipe} />}
+			{recipe ? <Recipe recipe={recipe} /> : <h3>No recipe found</h3>}
 		</>
 	)
 }
 
-export const getServerSideProps = async function ({ query, req }) {
+export const getServerSideProps = async function ({ query }) {
 	const { tags } = query
-	const { host } = req.headers
 
 	try {
-		const URL = `${host}/api/randomRecipe?tags=mediterranean,${tags}`
-
-		const res = await fetch(URL)
-		const { recipe } = await res.json()
+		const recipe = await getRandomRecipe({
+			tags: tags === "diet" ? "mediterranean" : tags,
+		})
 
 		return {
 			props: {

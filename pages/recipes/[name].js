@@ -1,6 +1,7 @@
 // import { useRouter } from 'next/router'
 import Head from "next/head"
 import Recipe from "../../components/Recipe"
+import { getRecipesByID } from "../api/recipesByID"
 
 export default function RecipePage({ recipe = null }) {
 	const titleTag = recipe?.title || ""
@@ -17,16 +18,13 @@ export default function RecipePage({ recipe = null }) {
 	)
 }
 
-export const getServerSideProps = async function ({ query, req }) {
+export const getServerSideProps = async function ({ query }) {
 	const { name } = query
 	const splittedName = name.split("-")
 	const ID = splittedName[splittedName.length - 1]
-	const { host } = req.headers
 
 	try {
-		const URL = `${host}/api/recipesByID?ID=${ID}`
-		const res = await fetch(URL)
-		const { recipe } = await res.json()
+		const recipe = getRecipesByID(ID)
 
 		return {
 			props: {

@@ -1,10 +1,14 @@
-export default async function handler (req, res) {
-  const URL = `https://api.spoonacular.com/recipes/${req.query.ID}/information?includeInstructions=true&apiKey=${process.env.SPOONACULAR_API_KEY}`
-  const response = await fetch(URL)
-  const recipe = await response.json()
-  recipe.status === 'failure' && (recipe = null)
+export default async function handler(req, res) {
+	const recipe = await getRecipesByID(req.query.ID)
+	res.status(200).json({
+		recipe,
+	})
+}
 
-  res.status(200).json({
-    recipe: recipe || null
-  })
+export async function getRecipesByID(id) {
+	const URL = `https://api.spoonacular.com/recipes/${id}/information?includeInstructions=true&apiKey=${process.env.SPOONACULAR_API_KEY}`
+	const response = await fetch(URL)
+	const recipe = await response.json()
+
+	return recipe || null
 }
