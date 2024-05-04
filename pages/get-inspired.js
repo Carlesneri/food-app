@@ -6,10 +6,10 @@ export default function ToGetInspired({ recipe }) {
 	return (
 		<>
 			<Head>
-				<title>To get inspired | Mediterranean food</title>
+				<title>To get inspired | Nerifood</title>
 				<meta
 					name="description"
-					content="Get inspired with a suculent mediterranean recipe."
+					content="Get inspired with a suculent recipe."
 				/>
 			</Head>
 			{recipe && <Recipe recipe={recipe} />}

@@ -1,16 +1,7 @@
 .headerWrapper {
-	margin: 0;
 	width: 100%;
 	min-height: 72px;
 	background-color: var(--regular-blue);
-}
-.header {
-	color: white;
-	font-weight: bold;
-	max-width: var(--header-max-width);
-	display: grid;
-	grid-template-columns: 70px auto;
-	align-items: center;
 }
 .logo {
 	position: relative;

@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<div>
 			<Head>
-				<title>Mediterranean food</title>
+				<title>Nerifood</title>
 				<meta
 					name="description"
 					content="Recipes, plans and everything about mediterranean food."

@@ -15,7 +15,7 @@ export default function Tags({ recipe = null }) {
 	return (
 		<>
 			<Head>
-				<title>{titleTag} | Mediterranean food</title>
+				<title>{titleTag} | Nerifood</title>
 				<meta name="description" content={content} />
 			</Head>
 			{recipe ? <Recipe recipe={recipe} /> : <h3>No recipe found</h3>}

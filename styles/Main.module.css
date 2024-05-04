@@ -1,8 +1,9 @@
 .main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0.5rem;
 }
 .main li {
-  display: flex;
+	display: flex;
 }
